@@ -1,0 +1,35 @@
+/* style.css */
+body {
+    background-color: #121212; /* Dark background */
+    color: #ffffff; /* White text */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+/* Flex container for charts */
+.chart-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px; /* Space between charts */
+}
+
+/* Individual chart item */
+.chart-item {
+    background-color: #1e1e1e; /* Darker background for each chart */
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    flex: 1 1 calc(33% - 40px); /* Adjust width; allows for 3 in a row with gaps */
+    min-width: 300px; /* Minimum width for charts */
+}
+
+canvas {
+    width: 100% !important; /* Make the canvas fill the chart item */
+    height: 300px !important; /* Set a fixed height for consistency */
+}
