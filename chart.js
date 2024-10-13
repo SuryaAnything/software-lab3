@@ -1,4 +1,4 @@
-// chart.js
+// Load and parse the CSV file using PapaParse
 function loadCSV(file) {
     Papa.parse(file, {
         header: true,
@@ -9,6 +9,7 @@ function loadCSV(file) {
     });
 }
 
+// Function to create all charts based on parsed CSV data
 function createCharts(data) {
     createAgeChart(data);
     createGenderChart(data);
@@ -116,43 +117,48 @@ function createTransportChart(data) {
     });
 }
 
-// Chart for Food Preference
+// Chart for Food Preferences
 function createFoodChart(data) {
     const foods = {};
     
     data.forEach(response => {
         const food = response['Which type of food do you enjoy the most?'];
-        const foodItems = food.split(", "); // Split multiple preferences
-        foodItems.forEach(item => {
-            foods[item] = (foods[item] || 0) + 1;
-        });
+        if (food) {
+            const foodItems = food.split(", ");  // Splitting the comma-separated values
+            foodItems.forEach(item => {
+                foods[item.trim()] = (foods[item.trim()] || 0) + 1;
+            });
+        }
     });
 
     const labels = Object.keys(foods);
     const values = Object.values(foods);
 
-    const foodCtx = document.getElementById('foodChart').getContext('2d');
-    new Chart(foodCtx, {
-        type: 'bar',
-        data: {
-            labels: labels,
-            datasets: [{
-                label: 'Food Preferences',
-                data: values,
-                backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                borderColor: 'rgba(153, 102, 255, 1)',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+    if (labels.length > 0) {  // Ensure there's data to display
+        const foodCtx = document.getElementById('foodChart').getContext('2d');
+        new Chart(foodCtx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Food Preferences',
+                    data: values,
+                    backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                    borderColor: 'rgba(153, 102, 255, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 }
+
 
 // Chart for Satisfaction Level
 function createSatisfactionChart(data) {
